@@ -16,8 +16,8 @@ namespace InventoryManagement.DTOs
         [Range(0.01, double.MaxValue, ErrorMessage = "Price should be always a non zero positive number.")]
         public decimal Price { get; set; }
 
-        [JsonProperty(PropertyName = "availableStocks")]
-        [Range(0, int.MaxValue, ErrorMessage = "AvailableStocks cannot have a negative value.")]
+        [JsonProperty(PropertyName = "stockAvailable")]
+        [Range(0, int.MaxValue, ErrorMessage = "StockAvailable cannot have a negative value.")]
         public int AvailableStocks { get; set; }
 
         [JsonProperty(PropertyName = "category")]
