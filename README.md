@@ -118,6 +118,9 @@ https://localhost:5000/swagger/index.html
 ### 7. Running Tests
 
 To run unit tests:
+```cmd
+cd ShoppingKart
+```
 
 ```cmd
 dotnet test InventoryManagementTest
