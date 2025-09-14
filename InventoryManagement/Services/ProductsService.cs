@@ -29,7 +29,11 @@ namespace InventoryManagement.Services
         {
             var product = await _productsRepository.GetByIdAsync(productId);
 
-            if (product == null) return false;
+            if (product == null)
+            {
+                _logger.LogWarning("Product not found for AddToStock: {ProductId}", productId);
+                return false;
+            }
 
             product.StockAvailable += quantity;
 
@@ -57,7 +61,11 @@ namespace InventoryManagement.Services
         {
             var product = await _productsRepository.GetByIdAsync(productId);
 
-            if (product == null || product.StockAvailable < quantity) return false;
+            if (product == null || product.StockAvailable < quantity)
+            {
+                _logger.LogWarning("Failed to decrement stock for productId {ProductId}", productId);
+                return false;
+            }
 
             product.StockAvailable -= quantity;
 
@@ -71,7 +79,12 @@ namespace InventoryManagement.Services
         /// </summary>
         public async Task<bool> DeleteProduct(int productId)
         {
-            return await _productsRepository.DeleteAsync(productId);
+            var result = await _productsRepository.DeleteAsync(productId);
+            if (result)
+                _logger.LogInformation("Product deleted: {ProductId}", productId);
+            else
+                _logger.LogWarning("Product not found for delete: {ProductId}", productId);
+            return result;
         }
 
         /// <summary>
@@ -81,7 +94,11 @@ namespace InventoryManagement.Services
         {
             var product = await _productsRepository.GetByIdAsync(productId);
 
-            if (product == null) return null;
+            if (product == null)
+            {
+                _logger.LogWarning("Product not found for GetProduct: {ProductId}", productId);
+                return null;
+            }
 
             return _mapper.Map<ResponseProductDto>(product);
         }
@@ -105,7 +122,11 @@ namespace InventoryManagement.Services
 
             var product = await _productsRepository.UpdateAsync(productId, updatedProductDetails);
 
-            if (product == null) return null;
+            if (product == null)
+            {
+                _logger.LogWarning("Product not found for UpdateProduct: {ProductId}", productId);
+                return null;
+            }
 
             return _mapper.Map<ResponseProductDto>(product);
         }

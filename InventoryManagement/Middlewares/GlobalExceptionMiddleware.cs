@@ -19,6 +19,7 @@ namespace InventoryManagement.Middlewares
         {
             try
             {
+                _logger.LogInformation("Request started: {Method} {Path} TraceId: {TraceId}", context.Request.Method, context.Request.Path, Activity.Current?.Id ?? context.TraceIdentifier);
                 await _next(context); // move to next middleware
             }
             catch (Exception ex)
