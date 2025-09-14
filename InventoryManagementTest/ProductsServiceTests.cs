@@ -177,7 +177,7 @@ namespace InventoryManagementTest
                 Name = "Updated Product",
                 Description = "Updated Description",
                 Price = 199.99m,
-                AvailableStocks = 20,
+                StockAvailable = 20,
                 Category = "TestCategory"
             };
 
